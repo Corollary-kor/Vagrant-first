@@ -12,9 +12,9 @@ Vagrant.configure("2") do |config|
     # test1.vm.network "public_network", bridge: "brdige0"
     # test1.vm.network "private_network", ip: "192.168.10.10"
     # test1.vm.disk :disk, size: "100GB", primary: true
-    test1.vm.network "public_network", ip: "192.168.0.50"
+    # test1.vm.network "public_network", ip: "192.168.150.50"
     # test1.vm.network "public_network", ip: "192.168.103.11", gateway: "192.168.0.1", dns: "168.126.63.1"
-    # test1.vm.network :public_network, ip: '192.168.103.11', :netmask => '255.255.0.0', :bridge => 'enp4s0'
+    test1.vm.network :public_network, ip: '192.168.150.50', :netmask => '255.255.0.0', :bridge => 'enp4s0'
     test1.disksize.size = '50GB'
     test1.vm.provider "virtualbox" do |v|
       v.name = "test1"
@@ -23,5 +23,14 @@ Vagrant.configure("2") do |config|
       v.linked_clone = true
       v.gui = false
     end
+
+   test1.vm.provision "file", source: ".", destination: "/tmp/vagrant"
+   test1.vm.provision "shell", inline: <<-SHELL
+	sudo mv /tmp/vagrant /vagrant
+	sudo cp /vagrant/SSH/sshd_config /etc/ssh/sshd_config
+	sudo systemctl restart sshd
+	sudo apt update
+	sudo apt upgrade
+   SHELL
   end 
 end
