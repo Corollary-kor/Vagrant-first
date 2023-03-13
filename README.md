@@ -20,9 +20,12 @@ https://app.vagrantup.com/boxes/search
 
 
 ## vagrant command
+
+```
 vagrant up 
 vagarnt status
 vagrant ssh [vm name]
 vagarnt destroy
-vagrant reload - vm 재실행, vagrantfile에 수정된 내용 반영
+vagrant reload  # vm 재실행, vagrantfile에 수정된 내용 반영
+```
 
